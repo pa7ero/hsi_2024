@@ -8,7 +8,7 @@ class Reguler extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            'Profil',
+            'Reguler',
             style:
                 TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
           ),

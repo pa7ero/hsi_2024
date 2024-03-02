@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Beranda extends StatefulWidget {
   @override
@@ -10,13 +11,20 @@ class Beranda extends StatefulWidget {
 
 class _BerandaState extends State<Beranda> {
   int _current = 0;
+  final controller = PageController(viewportFraction: 0.8, keepPage: true);
 
   final CarouselController _controller = CarouselController();
   final List<Widget> imageSliders = [
     Container(
       height: 500,
       width: 500,
-      child: Image.asset('./assets/images/air.jpeg'),
+      margin: EdgeInsets.all(10.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        child: Image.asset(
+          './assets/images/air.jpeg',
+        ),
+      ),
     ),
     Container(
       height: 500,
@@ -108,21 +116,19 @@ class _BerandaState extends State<Beranda> {
               children: imageSliders.asMap().entries.map((entry) {
                 return GestureDetector(
                   onTap: () => _controller.animateToPage(entry.key),
-                  child: Container(
-                    width: 12.0,
-                    height: 12.0,
-                    margin:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: (Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.black)
-                            .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-                  ),
+                  child: Container(),
                 );
               }).toList(),
             ),
+            Center(
+                child: AnimatedSmoothIndicator(
+              activeIndex: _current,
+              count: imageSliders.length,
+              effect: ExpandingDotsEffect(
+                dotHeight: 10,
+                dotWidth: 10,
+              ),
+            )),
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Text(
